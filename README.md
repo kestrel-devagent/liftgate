@@ -14,7 +14,7 @@ Human intent as source of truth — record what was asked, verify work matched.
 
 ## Paid
 
-**Charter Pro — $49/mo** via PayPal to `hudson.gouge@projxon.ai` with note **`Charter Pro`**.  
+**Charter Pro — $49/mo** via Stripe Checkout on the Charter landing.
 Brand: **Charter** / **Kestrel Ops**.
 
 ## GitHub Pages
