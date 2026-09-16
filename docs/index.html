@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Liftgate — Agent preference infrastructure | Kestrel Ops</title>
+<meta name="description" content="Liftgate mines coding-agent trajectories, audits soft vs strong preference labels, and ships DPO/preference splits with an agent-eval gate. Free Hub artifacts + Starter $49/mo." />
+<meta name="theme-color" content="#0b1220" />
+<link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+<main class="wrap">
+  <nav>
+    <a class="brand" href="./">
+      <span class="logo">LG</span>
+      <strong>Liftgate</strong>
+      <span class="fine">by Kestrel Ops</span>
+    </a>
+    <a href="#thesis">Thesis</a>
+    <a href="#findings">Findings</a>
+    <a href="#free">Free</a>
+    <a href="./starter.html">Starter $49</a>
+    <a href="#waitlist">Waitlist</a>
+  </nav>
+
+  <p><span class="tag">Preference infra</span> <span class="tag warn">Not an ops dashboard</span></p>
+  <h1>Mine trajectories. Audit soft vs strong. Ship preference splits that survive an eval gate.</h1>
+  <p class="lede">
+    Liftgate is agent preference infrastructure for coding and tool agents —
+    divergence mining → soft-label audit → strong-split export → DPO + agent-eval gate.
+    Built for teams who need honest preference data, not another monitoring pane.
+  </p>
+  <div class="cta">
+    <a class="btn btn-primary" href="#free">Open free Hub artifacts</a>
+    <a class="btn" href="./starter.html">Starter $49/mo</a>
+    <a class="btn btn-ghost" href="#waitlist">Join waitlist</a>
+  </div>
+
+  <section id="thesis" class="card">
+    <h2>Thesis</h2>
+    <p class="fine" style="margin-top:0">
+      Most “agent DPO” pipelines train on soft forks: explore↔explore, same-tool first divergences,
+      cosmetic arg tweaks. Those pairs look like preference data and score like noise.
+      Liftgate starts from the opposite assumption: <strong style="color:var(--text)">label quality is the product</strong>.
+    </p>
+    <ul class="clean">
+      <li><strong>Mine</strong> first-divergence trajectories from coding/tool agents (OpenHands-style actions).</li>
+      <li><strong>Audit</strong> soft vs strong: decisive exclusivity, chosen-strong actions (edit/create/test/script), drop soft junk.</li>
+      <li><strong>Split</strong> instance-held-out train/eval preference files ready for DPO / pairwise scoring.</li>
+      <li><strong>Gate</strong> with agent-eval before claiming lift — pairwise Δ alone is not product proof.</li>
+    </ul>
+    <p class="fine">
+      What Liftgate is <em>not</em>: a Datadog/ops dashboard, a claim of SOTA agent lift, or a closed-loop proof from one adapter run.
+    </p>
+  </section>
+
+  <section class="grid two">
+    <div class="card soft">
+      <h2>Pipeline</h2>
+      <ol class="steps">
+        <li>Ingest trajectories / divergence pairs</li>
+        <li>Soft-label audit + strong filter report</li>
+        <li>Export train/eval preference JSONL</li>
+        <li>Optional DPO + pairwise / agent-eval gate</li>
+      </ol>
+    </div>
+    <div class="card soft">
+      <h2>Who it’s for</h2>
+      <ul class="clean">
+        <li>Teams training tool-use / coding agents</li>
+        <li>Labs that need auditable preference splits</li>
+        <li>Builders who want FINDINGS-grade honesty in public cards</li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="findings" class="card">
+    <h2>Public findings (honest tone)</h2>
+    <div class="findings">
+      <p style="margin-top:0">
+        <strong>Do not overclaim.</strong> Parent full-run preference lift on soft data was a
+        <strong>noisy null / inconclusive</strong> result (~+1.2pp inside ~±4.1pp CI). Soft-label rates
+        (~46% same-tool, weak first-divergence credit) made that unsurprising.
+      </p>
+      <p>
+        After template fix + remine + strong filter (v2.2: <strong>386 / 59</strong> train/eval),
+        a diagnostic scale DPO showed pairwise lift on the strong split
+        (<code>delta_norm +0.220</code>, n=59, wide CI). That is a
+        <strong>diagnostic / process GO</strong> — job health + loss↓ + non-negative delta_norm —
+        <strong>not</strong> a significance claim, and <strong>no agent-eval</strong> was run on that adapter.
+      </p>
+      <p style="margin-bottom:0">
+        Liftgate’s free tier points at these artifacts so you can inspect the filter report and numbers yourself.
+      </p>
+    </div>
+    <table>
+      <thead>
+        <tr><th>Artifact</th><th>What you get</th><th>Claim bar</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><a href="https://huggingface.co/datasets/asaverren/openhands-divergence-dpo-strong">strong DPO split</a></td>
+          <td>v2.2 strong preference JSONL + filter report</td>
+          <td>Quality-filtered data; not SOTA proof</td>
+        </tr>
+        <tr>
+          <td><a href="https://huggingface.co/asaverren/qwen35-4b-openhands-divergence-dpo">Qwen3.5-4B LoRA</a></td>
+          <td>Default = strong-scale adapter; historical null/smoke in subfolders</td>
+          <td>Diagnostic GO only; no agent-eval</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section id="free" class="card">
+    <h2>Free tier</h2>
+    <p class="fine" style="margin-top:0">
+      Public Hub artifacts from the Liftgate co-build line (Asa research / Kestrel Ops shipping).
+      CC-BY-4.0 dataset · Apache-2.0 model adapter. Read the cards — they are written to prevent hype.
+    </p>
+    <div class="cta">
+      <a class="btn btn-primary" href="https://huggingface.co/datasets/asaverren/openhands-divergence-dpo-strong" target="_blank" rel="noopener">Dataset: openhands-divergence-dpo-strong</a>
+      <a class="btn" href="https://huggingface.co/asaverren/qwen35-4b-openhands-divergence-dpo" target="_blank" rel="noopener">Model: qwen35-4b-openhands-divergence-dpo</a>
+      <a class="btn btn-ghost" href="https://huggingface.co/datasets/asaverren/openhands-divergence-dpo" target="_blank" rel="noopener">Parent full set</a>
+    </div>
+    <ul class="clean">
+      <li>Strong split counts (v2.2): <code>train_strong.jsonl</code> 386 · <code>eval_strong.jsonl</code> 59 · instance-held-out</li>
+      <li>Soft explore↔explore junk filtered; chosen-strong action bias documented on the card</li>
+      <li>Eval n=59 → rough 95% half-width ≈ ±13pp — still diagnostic</li>
+    </ul>
+  </section>
+
+  <section class="card soft">
+    <h2>Paid Starter (draft)</h2>
+    <p class="price">$49 <span>/ month</span></p>
+    <ul class="clean">
+      <li>Private trajectory ingest</li>
+      <li>Soft-label audit + strong-split export</li>
+      <li>Monthly agent-eval gate report</li>
+    </ul>
+    <p class="fine">Billing: <strong style="color:var(--text)">Kestrel Ops</strong> via PayPal · manual unlock stub (no card vault yet).</p>
+    <a class="btn btn-primary" href="./starter.html">Open Starter page</a>
+  </section>
+
+  <section id="waitlist" class="card">
+    <h2>Waitlist</h2>
+    <p class="fine" style="margin-top:0">
+      Tell us what agent stack you run. Submissions open your mail client to
+      <code>hudson.gouge@projxon.ai</code> and also append a local NDJSON line you can download
+      (GitHub Pages is static — no server-side log).
+    </p>
+    <form id="waitlist-form" novalidate>
+      <div class="row two">
+        <div>
+          <label for="email">Work email *</label>
+          <input id="email" name="email" type="email" required placeholder="you@company.com" autocomplete="email" />
+        </div>
+        <div>
+          <label for="name">Name</label>
+          <input id="name" name="name" type="text" placeholder="Optional" autocomplete="name" />
+        </div>
+      </div>
+      <div class="row two">
+        <div>
+          <label for="stack">Agent / tool stack</label>
+          <input id="stack" name="stack" type="text" placeholder="OpenHands, SWE-agent, custom, …" />
+        </div>
+        <div>
+          <label for="tier">Interest</label>
+          <select id="tier" name="tier">
+            <option value="free">Free Hub artifacts</option>
+            <option value="starter" selected>Starter $49/mo</option>
+            <option value="custom">Custom / volume</option>
+          </select>
+        </div>
+      </div>
+      <label for="notes">Notes</label>
+      <textarea id="notes" name="notes" placeholder="Trajectory volume, privacy constraints, eval harness…"></textarea>
+      <div class="cta" style="margin-bottom:0">
+        <button class="btn btn-primary" type="submit">Email waitlist signup</button>
+        <button class="btn" type="button" id="dl-ndjson">Download local NDJSON log</button>
+      </div>
+      <div class="toast" id="toast" role="status"></div>
+    </form>
+  </section>
+
+  <footer class="footer">
+    <p>
+      <strong style="color:var(--text)">Liftgate</strong> product · billing under <strong style="color:var(--text)">Kestrel Ops</strong>.
+      Contact <a href="mailto:hudson.gouge@projxon.ai">hudson.gouge@projxon.ai</a>.
+      Source: <a href="https://github.com/kestrel-devagent/liftgate">github.com/kestrel-devagent/liftgate</a>.
+    </p>
+    <p>Related: <a href="https://kestrel-devagent.github.io/hookkeep/">Hookkeep</a> · <a href="https://kestrel-devagent.github.io/n8n-webhook-catcher/">n8n Webhook Catcher</a></p>
+  </footer>
+</main>
+<script>
+(function () {
+  const KEY = 'liftgate_waitlist_ndjson_v1';
+  const to = 'hudson.gouge@projxon.ai';
+  function load() {
+    try { return JSON.parse(localStorage.getItem(KEY) || '[]'); } catch (_) { return []; }
+  }
+  function save(rows) {
+    localStorage.setItem(KEY, JSON.stringify(rows));
+  }
+  function rowFromForm(fd) {
+    return {
+      ts: new Date().toISOString(),
+      product: 'liftgate',
+      email: String(fd.get('email') || '').trim(),
+      name: String(fd.get('name') || '').trim(),
+      stack: String(fd.get('stack') || '').trim(),
+      tier: String(fd.get('tier') || '').trim(),
+      notes: String(fd.get('notes') || '').trim(),
+      source: 'pages-waitlist'
+    };
+  }
+  function toast(msg) {
+    const el = document.getElementById('toast');
+    el.textContent = msg;
+    el.classList.add('show');
+  }
+  document.getElementById('waitlist-form').addEventListener('submit', function (e) {
+    e.preventDefault();
+    const fd = new FormData(e.target);
+    const row = rowFromForm(fd);
+    if (!row.email || !row.email.includes('@')) {
+      toast('Please enter a valid work email.');
+      return;
+    }
+    const rows = load();
+    rows.push(row);
+    save(rows);
+    const subject = encodeURIComponent('Liftgate waitlist — ' + row.tier);
+    const body = encodeURIComponent(
+      'Liftgate waitlist signup\n\n' +
+      'Email: ' + row.email + '\n' +
+      'Name: ' + (row.name || '(none)') + '\n' +
+      'Stack: ' + (row.stack || '(none)') + '\n' +
+      'Interest: ' + row.tier + '\n' +
+      'Notes: ' + (row.notes || '(none)') + '\n' +
+      'TS: ' + row.ts + '\n'
+    );
+    toast('Saved locally. Opening mail to ' + to + '…');
+    window.location.href = 'mailto:' + to + '?subject=' + subject + '&body=' + body;
+  });
+  document.getElementById('dl-ndjson').addEventListener('click', function () {
+    const rows = load();
+    const text = rows.map(function (r) { return JSON.stringify(r); }).join('\n') + (rows.length ? '\n' : '');
+    const blob = new Blob([text], { type: 'application/x-ndjson' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'liftgate-waitlist.ndjson';
+    a.click();
+    URL.revokeObjectURL(a.href);
+    toast(rows.length ? ('Downloaded ' + rows.length + ' row(s).') : 'Log empty — submit the form first.');
+  });
+})();
+</script>
+</body>
+</html>
